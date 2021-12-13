@@ -20,7 +20,7 @@ public class ReckonService {
     private int count = 900000000;
     
     private ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8, 16, 2, TimeUnit.SECONDS,
-            new LinkedBlockingQueue(10000));
+            new LinkedBlockingQueue(10000),new ThreadPoolExecutor.DiscardPolicy());
     
     public void testNormal(){
         long start = System.currentTimeMillis();
@@ -58,6 +58,7 @@ public class ReckonService {
             int activeCount = threadPoolExecutor.getActiveCount();
             if(activeCount == 0){
                 System.out.println("所有任务都结束了！");
+                System.out.println("完成任务数:"+threadPoolExecutor.getCompletedTaskCount());
                 break;
             }
         }
